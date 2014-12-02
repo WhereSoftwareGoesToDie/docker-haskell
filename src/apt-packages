@@ -6,3 +6,4 @@ pkg-config
 libpq5
 libpq-dev
 happy
+curl

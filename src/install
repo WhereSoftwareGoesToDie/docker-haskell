@@ -14,7 +14,8 @@ cabal install 'mtl>=2.2'
 
 STACKAGE_URL=$(curl http://www.stackage.org/alias/fpcomplete/unstable-ghc78-inclusive -s -L -I -o /dev/null -w '%{url_effective}')
 STACKAGE="remote-repo: stackage-ghc78-inc:${STACKAGE_URL}"
-echo $STACKAGE | cat - /root/.cabal/config > /tmp/out && mv /tmp/out /root/.cabal/config
+
+sed -i -Ee 's#^remote-repo: (.*)$#${STACKAGE}#' src/.cabal/config
 cabal update
 
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
