@@ -1,0 +1,15 @@
+#!/bin/sh
+set +x
+set +e
+
+export HOME=/src
+export PATH=/src/.cabal/bin:$PATH
+
+cd /src
+
+apt-get update && apt-get upgrade
+cat apt-packages | xargs apt-get install
+
+cabal update
+cat cabal-tools | xargs cabal install --global
+cat cabal-packages | xargs cabal install --global

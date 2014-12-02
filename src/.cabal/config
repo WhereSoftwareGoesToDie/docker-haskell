@@ -1,0 +1,21 @@
+remote-repo: anchor:http://hackage.syd1.anchor.net.au/packages/archive
+remote-repo-cache: /src/.cabal/packages
+world-file: /src/.cabal/world
+library-profiling: False
+executable-dynamic: False
+executable-profiling: False
+optimization: True
+split-objs: False
+executable-stripping: True
+user-install: True
+tests: False
+benchmarks: False
+documentation: False
+remote-build-reporting: none
+jobs: $ncpus
+
+install-dirs user
+  prefix: /src/.cabal
+
+install-dirs global
+  -- prefix: /usr/local
