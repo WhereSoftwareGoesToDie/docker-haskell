@@ -13,7 +13,8 @@ cat apt-packages | xargs apt-get install
 cabal update
 cabal install 'mtl>=2.2'
 
-STACKAGE="remote-repo: stackage-2014-11-27-ghc78-inc-1:http://www.stackage.org/snapshot/2014-11-27-ghc78-inc-1"
+STACKAGE_URL=$(curl http://www.stackage.org/alias/fpcomplete/unstable-ghc78-inclusive -s -L -I -o /dev/null -w '%{url_effective}')
+STACKAGE="remote-repo: stackage-ghc78-inc:${STACKAGE_URL}"
 echo $STACKAGE | cat - .cabal/config > /tmp/out && mv /tmp/out .cabal/config
 cabal update
 
