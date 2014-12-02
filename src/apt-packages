@@ -5,3 +5,4 @@ libzmq3-dev
 pkg-config
 libpq5
 libpq-dev
+happy

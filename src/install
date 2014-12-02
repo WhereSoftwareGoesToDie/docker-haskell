@@ -7,7 +7,7 @@ export PATH=/src/.cabal/bin:$PATH
 
 cd /src
 
-apt-get update && apt-get upgrade
+apt-get update
 cat apt-packages | xargs apt-get install
 
 cabal update
