@@ -1,3 +1,7 @@
+text>=1.2.0.0
+network>=2.6.0.0
+generic-aeson>=0.2.0.2
+json-schema>=0.7.3.0
 zeromq4-haskell
 rest-core
 rest-types
@@ -5,7 +9,7 @@ rest-client
 rest-snap
 snap-core
 snap-server
-lens
+lens==4.4.*
 optparse-applicative
 trifecta
 hspec
