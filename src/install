@@ -11,5 +11,5 @@ apt-get update && apt-get upgrade
 cat apt-packages | xargs apt-get install
 
 cabal update
-cat cabal-tools | xargs cabal install --global
-cat cabal-packages | xargs cabal install --global
+cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
+cat cabal-packages | tr "\n" "\0" | xargs -0 cabal install --global

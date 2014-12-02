@@ -1,4 +1,4 @@
-mtl
+mtl >= 2.2
 zeromq4-haskell
 rest-core
 rest-types
@@ -17,5 +17,4 @@ pipes-concurrency
 pipes-bytestring
 pipes-safe
 pipes-binary
-pipes-extras
 pipes-group
