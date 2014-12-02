@@ -13,8 +13,11 @@ hspec
 postgresql-simple
 haskell-src-exts
 pipes
+pipes-parse
 pipes-concurrency
 pipes-bytestring
 pipes-safe
+pipes-aeson
+pipes-csv
 pipes-binary
 pipes-group
