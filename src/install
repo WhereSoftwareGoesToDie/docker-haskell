@@ -11,5 +11,11 @@ apt-get update
 cat apt-packages | xargs apt-get install
 
 cabal update
+cabal install 'mtl>=2.2'
+
+STACKAGE="remote-repo: stackage-2014-11-27-ghc78-inc-1:http://www.stackage.org/snapshot/2014-11-27-ghc78-inc-1"
+echo $STACKAGE | cat - .cabal/config > /tmp/out && mv /tmp/out .cabal/config
+cabal update
+
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
 cat cabal-packages | tr "\n" "\0" | xargs -0 cabal install --global

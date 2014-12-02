@@ -1,4 +1,4 @@
-remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
+-- remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
 -- remote-repo: anchor:http://hackage.syd1.anchor.net.au/packages/archive
 remote-repo-cache: /src/.cabal/packages
 world-file: /src/.cabal/world
