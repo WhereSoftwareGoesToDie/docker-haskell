@@ -2,6 +2,7 @@ git
 ca-certificates
 ssh
 libzmq3-dev
+libzmq3
 pkg-config
 libpq5
 libpq-dev
