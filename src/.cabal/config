@@ -1,6 +1,6 @@
 remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
-remote-repo-cache: /src/.cabal/packages
-world-file: /src/.cabal/world
+remote-repo-cache: /root/.cabal/packages
+world-file: /root/.cabal/world
 library-profiling: False
 executable-dynamic: False
 executable-profiling: False
