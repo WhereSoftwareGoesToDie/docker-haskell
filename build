@@ -7,13 +7,18 @@ DOCKER_REGISTRY=$2
 DOCKER_OPTS=$3
 VERSION="$(date -u +%Y%m%d-%H%MZ)"
 IMAGE_NAME="${NAME}-${VERSION}"
+STACKAGE_URL=$(curl http://www.stackage.org/alias/fpcomplete/unstable-ghc78-inclusive -s -L -I -o /dev/null -w '%{url_effective}')
+COMMIT=$(git rev-parse HEAD)
+UID="${COMMIT}${STACKAGE_URL}"
 
-
-docker $DOCKER_OPTS pull $DOCKER_REGISTRY/afcowie/haskell
-mkdir -p cache
-rsync -a src/ cache
-docker $DOCKER_OPTS run --name="$IMAGE_NAME" -t -v ${PWD}/cache:/src:rw $DOCKER_REGISTRY/afcowie/haskell src/install
-docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
-docker $DOCKER_OPTS rm "$IMAGE_NAME"
-docker $DOCKER_OPTS tag "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
-docker $DOCKER_OPTS push "$DOCKER_REGISTRY/engineering/${NAME}:latest"
+if !grep -q "^${UID}$" last-built; then
+  echo "${UID}" > last-built
+  docker $DOCKER_OPTS pull $DOCKER_REGISTRY/afcowie/haskell
+  mkdir -p cache
+  rsync -a src/ cache
+  docker $DOCKER_OPTS run -e STACKAGE_URL=$STACKAGE_URL --name="$IMAGE_NAME" -t -v ${PWD}/cache:/src:rw $DOCKER_REGISTRY/afcowie/haskell src/install
+  docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
+  docker $DOCKER_OPTS rm "$IMAGE_NAME"
+  docker $DOCKER_OPTS tag "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
+  docker $DOCKER_OPTS push "$DOCKER_REGISTRY/engineering/${NAME}:latest"
+fi

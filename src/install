@@ -15,7 +15,6 @@ cabal update
 # https://github.com/fpco/stackage/issues/217
 cabal install --global 'mtl>=2.2'
 
-STACKAGE_URL=$(curl http://www.stackage.org/alias/fpcomplete/unstable-ghc78-inclusive -s -L -I -o /dev/null -w '%{url_effective}')
 STACKAGE="remote-repo: stackage-ghc78-inc:${STACKAGE_URL}"
 
 sed -i -Ee "s#^remote-repo: (.*)\$#${STACKAGE}#" /root/.cabal/config
