@@ -1,6 +1,7 @@
 aeson-lens
 auto-update
 byteorder
+clock
 conduit-extra
 cpu
 data-binary-ieee754
@@ -19,6 +20,7 @@ lens
 lens-aeson
 lifted-async
 locators
+lz4
 mime-mail
 MissingH
 monad-logger
@@ -38,6 +40,7 @@ pipes-parse
 pipes-safe
 postgresql-simple
 protobuf
+reinterpret-cast
 regex-compat
 regex-tdfa
 regex-tdfa-rc
@@ -50,6 +53,7 @@ simple-sendfile
 siphash
 snap-core
 snap-server
+split
 stm-chans
 stringsearch
 tagsoup
