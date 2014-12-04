@@ -9,10 +9,10 @@ VERSION="$(date -u +%Y%m%d-%H%MZ)"
 IMAGE_NAME="${NAME}-${VERSION}"
 STACKAGE_URL=$(curl http://www.stackage.org/alias/fpcomplete/unstable-ghc78-inclusive -s -L -I -o /dev/null -w '%{url_effective}')
 COMMIT=$(git rev-parse HEAD)
-UID="${COMMIT}${STACKAGE_URL}"
+FINGERPRINT="${COMMIT}${STACKAGE_URL}"
 
-if !grep -q "^${UID}$" last-built; then
-  echo "${UID}" > last-built
+if ! grep -q "^${FINGERPRINT}$" last-built; then
+  echo "${FINGERPRINT}" > last-built
   docker $DOCKER_OPTS pull $DOCKER_REGISTRY/afcowie/haskell
   mkdir -p cache
   rsync -a src/ cache
