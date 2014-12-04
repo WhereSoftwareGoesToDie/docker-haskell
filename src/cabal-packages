@@ -63,6 +63,7 @@ scotty
 simple-sendfile
 siphash
 snap
+snaplet-postgresql-simple
 snap-core
 snap-loader-static
 snap-server
