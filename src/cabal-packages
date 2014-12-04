@@ -35,6 +35,7 @@ rest-client
 rest-core
 rest-snap
 rest-types
+siphash
 snap-core
 snap-server
 stm-chans
