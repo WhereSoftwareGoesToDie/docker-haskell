@@ -2,26 +2,32 @@
 set +x
 set +e
 
+cd /src
+
+apt-get update
+apt-get dist-upgrade
+cat apt-packages | xargs apt-get install
+
+wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
+tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
+cd ghc-7.8.4
+./configure
+make install
+
+mkdir /root/.cabal
 cp /src/.cabal/config /root/.cabal/config
 
 cd /src
 
-apt-get update
-cat apt-packages | xargs apt-get install
-
 cabal update
+wget "${STACKAGE_URL}/cabal.config?global=true"
+cat "cabal.config?global=true" >> /root/.cabal/config
 # Stackage still has an old version of mtl.
 # The packages responsible seem okay to ignore for us though.
 # https://github.com/fpco/stackage/issues/217
-cabal install --global 'mtl>=2.2'
-
-STACKAGE="remote-repo: stackage-ghc78-inc:${STACKAGE_URL}"
-
-sed -i -Ee "s#^remote-repo: (.*)\$#${STACKAGE}#" /root/.cabal/config
+sed -i -Ee "s#^constraint: mtl ==(.*)\$#constraint: mtl >=2.2.1#" /root/.cabal/config
+sed -i -Ee "s#^constraint: transformers (.*)\$#constraint: transformers ==0.4.*#" /root/.cabal/config
 cabal update
-
-# This is to prevent transformers 0.3
-cabal install --global 'transformers-compat' -f -three
 
 # alex, happy and other tools
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global

@@ -8,3 +8,17 @@ libpq5
 libpq-dev
 happy
 curl
+xz-utils
+autoconf
+automake
+libtool
+make
+libgmp-dev
+ncurses-dev
+g++
+llvm
+python
+bzip2
+zlib1g
+zlib1g-dev
+cabal-install
