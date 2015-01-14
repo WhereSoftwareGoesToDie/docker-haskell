@@ -5,11 +5,13 @@ set -e
 NAME=$1
 DOCKER_REGISTRY=$2
 DOCKER_OPTS=$3
-VERSION="$(date -u +%Y%m%d-%H%MZ)"
+STACKAGE_VARIETY='lts'
+STACKAGE_VERSION='1.1'
+VERSION="$(date -u +%Y%m%d-%H%MZ)-$STACKAGE_VARIETY-$STACKAGE_VERSION"
 IMAGE_NAME="${NAME}-${VERSION}"
-STACKAGE_URL='http://www.stackage.org/lts/1.0'
+STACKAGE_URL="http://www.stackage.org/$STACKAGE_VARIETY/$STACKAGE_VERSION"
 COMMIT=$(git rev-parse HEAD)
-FINGERPRINT="${COMMIT}${STACKAGE_URL}"
+FINGERPRINT="${COMMIT}-$STACKAGE_VARIETY-$STACKAGE_VERSION"
 
 if ! grep -q "^${FINGERPRINT}$" last-built; then
   docker $DOCKER_OPTS pull $DOCKER_REGISTRY/afcowie/debian:jessie
@@ -18,7 +20,7 @@ if ! grep -q "^${FINGERPRINT}$" last-built; then
   docker $DOCKER_OPTS run -e STACKAGE_URL=$STACKAGE_URL --name="$IMAGE_NAME" -t -v ${PWD}/cache:/src:rw $DOCKER_REGISTRY/afcowie/debian:jessie /src/install
   docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
   docker $DOCKER_OPTS rm "$IMAGE_NAME" || true
-  docker $DOCKER_OPTS tag "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
+  docker $DOCKER_OPTS tag -f "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
   docker $DOCKER_OPTS push "$DOCKER_REGISTRY/engineering/${NAME}:latest"
   echo "${FINGERPRINT}" > last-built
 fi
