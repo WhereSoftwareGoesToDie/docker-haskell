@@ -22,6 +22,7 @@ http-streams
 io-streams
 iproute
 json-schema
+LDAP
 lens
 lens-aeson
 lifted-async
