@@ -47,6 +47,7 @@ nettle-dev
 pkg-config
 python
 ssh
+wget
 xz-utils
 zip
 zlib1g
