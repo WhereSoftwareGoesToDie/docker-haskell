@@ -6,7 +6,7 @@ cd /src
 
 apt-get update
 apt-get dist-upgrade
-cat apt-packages | xargs apt-get install
+cat apt-packages | xargs apt-get install -y
 
 wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
 tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
