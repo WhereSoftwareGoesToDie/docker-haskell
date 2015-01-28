@@ -2,6 +2,8 @@
 set +x
 set +e
 
+echo "LANG=C.UTF-8" > /etc/default/locale
+
 cd /src
 
 apt-get update
