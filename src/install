@@ -43,4 +43,6 @@ cabal update
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
 
 # preinstalled packages
-cat cabal-packages | tr "\n" "\0" | xargs -0 cabal install --global
+cat cabal-packages | while read p ; do
+  if grep -q $p "cabal.config?global=true" ; then echo $p ; fi ;
+done | tr "\n" "\0" | xargs -0 cabal install --global
