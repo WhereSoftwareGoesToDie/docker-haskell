@@ -81,7 +81,6 @@ tasty
 tasty-hunit
 text
 transformers-free
-trifecta
 tuple
 unbounded-delays
 unix-time
