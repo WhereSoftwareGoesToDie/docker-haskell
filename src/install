@@ -3,7 +3,6 @@ set +x
 set +e
 
 echo "LANG=C.UTF-8" > /etc/default/locale
-export "LANG=C.UTF-8"
 
 cd /src
 
