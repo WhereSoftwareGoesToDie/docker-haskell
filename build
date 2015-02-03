@@ -15,7 +15,6 @@ FINGERPRINT="${COMMIT}-$STACKAGE_VARIETY-$STACKAGE_VERSION"
 USER="$UID"
 
 if ! grep -q "^${FINGERPRINT}$" last-built; then
-  docker $DOCKER_OPTS pull $DOCKER_REGISTRY/afcowie/debian:jessie
   mkdir -p cache
   rsync -a src/ cache
   docker $DOCKER_OPTS run -e LANG=C.UTF-8 \
