@@ -76,6 +76,7 @@ simple-sendfile
 siphash
 snap
 snap-core
+snap-cors
 snap-loader-static
 snap-server
 snaplet-postgresql-simple
@@ -97,6 +98,7 @@ uri-encode
 vault
 wai
 wai-app-static
+wai-cors
 wai-extra
 wai-logger
 warp

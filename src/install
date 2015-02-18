@@ -42,7 +42,12 @@ cabal update
 # alex, happy and other tools
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
 
+echoerr() { echo "$@" 1>&2; }
+
 # preinstalled packages
 cat cabal-packages | while read p ; do
-  if grep -q $p "cabal.config?global=true" ; then echo $p ; fi ;
+  if grep -q $p "cabal.config?global=true" ;
+  then echo $p ;
+  else echoerr "Dropping package" $p "as it is not on Stackage." ;
+  fi ;
 done | tr "\n" "\0" | xargs -0 cabal install --global
