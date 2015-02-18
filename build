@@ -22,7 +22,7 @@ if ! grep -q "^${FINGERPRINT}$" last-built; then
                           --name="$IMAGE_NAME" \
                           -t -v ${PWD}/cache:/src:rw \
                           debian:jessie \
-                          "/bin/bash" -c "/src/install ; chown -R $USER /src"
+                          "/bin/bash" -c "/src/install && chown -R $USER /src"
   docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
   docker $DOCKER_OPTS rm "$IMAGE_NAME" || true
   docker $DOCKER_OPTS tag -f "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
