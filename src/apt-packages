@@ -3,7 +3,6 @@ automake
 build-essential
 bzip2
 ca-certificates
-cabal-install
 curl
 freeglut3-dev
 g++

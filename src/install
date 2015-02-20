@@ -1,6 +1,7 @@
 #!/bin/sh
 set +x
 set +e
+set +h
 
 echo "LANG=C.UTF-8" > /etc/default/locale
 
@@ -15,6 +16,16 @@ tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
 cd ghc-7.8.4
 ./configure
 make install
+
+cd /src
+mkdir -p cabal
+cd cabal
+wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-install-1.22.0.0.tar.gz
+tar xf cabal-install-1.22.0.0.tar.gz
+cd cabal-install-1.22.0.0
+./bootstrap.sh --no-doc --sandbox
+cp -a .cabal-sandbox/bin/cabal /usr/local/bin/
+cabal update
 
 rm /usr/local/bin/haddock*
 rm -rf /usr/local/share/doc
