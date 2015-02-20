@@ -1,7 +1,6 @@
 #!/bin/sh
 set +x
 set +e
-set +h
 
 echo "LANG=C.UTF-8" > /etc/default/locale
 
