@@ -24,9 +24,7 @@ tar xf cabal-install-1.22.0.0.tar.gz
 cd cabal-install-1.22.0.0
 ./bootstrap.sh --no-doc --sandbox
 cp -a .cabal-sandbox/bin/cabal /usr/local/bin/
-cabal update
 
-rm /usr/local/bin/haddock*
 rm -rf /usr/local/share/doc
 
 mkdir /root/.cabal
@@ -34,7 +32,6 @@ cp /src/.cabal/config /root/.cabal/config
 
 cd /src
 
-cabal update
 wget "${STACKAGE_URL}/cabal.config?global=true"
 cat "cabal.config?global=true" >> /root/.cabal/config
 
