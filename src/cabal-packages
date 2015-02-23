@@ -40,7 +40,6 @@ mime-mail
 MissingH
 monad-logger
 monad-loops
-mtl-compat
 network
 network-uri
 OneTuple
