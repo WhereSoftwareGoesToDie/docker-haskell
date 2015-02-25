@@ -1,6 +1,8 @@
+aeson
 aeson-lens
 aeson-pretty
 auto-update
+bimap
 byteorder
 clock
 cmdargs
@@ -13,6 +15,7 @@ easy-file
 enclosed-exceptions
 fast-logger
 file-embed
+foldl
 generic-aeson
 hashmap
 haskell-src-exts
@@ -40,6 +43,7 @@ mime-mail
 MissingH
 monad-logger
 monad-loops
+multiset
 network
 network-uri
 OneTuple
