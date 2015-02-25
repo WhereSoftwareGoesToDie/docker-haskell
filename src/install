@@ -24,8 +24,8 @@ CABAL_VERSION=1.18.0.8
 wget "http://hackage.haskell.org/package/cabal-install-$CABAL_VERSION/cabal-install-$CABAL_VERSION.tar.gz"
 tar xf "cabal-install-$CABAL_VERSION.tar.gz"
 cd "cabal-install-$CABAL_VERSION"
-./bootstrap.sh --no-doc --sandbox
-cp -a .cabal-sandbox/bin/cabal /usr/local/bin/
+./bootstrap.sh
+cp -a /src/.cabal/bin/cabal /usr/local/bin/
 
 rm -rf /usr/local/share/doc
 
