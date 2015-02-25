@@ -34,7 +34,8 @@ cat "cabal.config?global=true" >> /root/.cabal/config
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
 
 # Prepare cabal-install (hacky way through debian cabal-install)
-apt-get install -y --nodeps cabal-install
+apt-get download cabal-install
+dpkg --force-all -i cabal-install*.deb
 cabal update
 cabal install -j --global cabal-install
 apt-get remove -y cabal-install
