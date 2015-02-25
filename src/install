@@ -19,10 +19,11 @@ make install
 cd /src
 mkdir -p cabal
 cd cabal
+CABAL_VERSION=1.18.0.8
 # This needs to be a version using the bundled version of Cabal
-wget http://hackage.haskell.org/package/cabal-install-1.18.0.8/cabal-install-1.18.0.8.tar.gz
-tar xf cabal-install-1.22.0.0.tar.gz
-cd cabal-install-1.22.0.0
+wget "http://hackage.haskell.org/package/cabal-install-$CABAL_VERSION/cabal-install-$CABAL_VERSION.tar.gz"
+tar xf "cabal-install-$CABAL_VERSION.tar.gz"
+cd "cabal-install-$CABAL_VERSION"
 ./bootstrap.sh --no-doc --sandbox
 cp -a .cabal-sandbox/bin/cabal /usr/local/bin/
 
