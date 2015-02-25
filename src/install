@@ -43,7 +43,7 @@ echo "constraint: snap-server +openssl" >> /root/.cabal/config
 cabal update
 
 # alex, happy and other tools
-cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install --global
+cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install -j --global
 
 echoerr() { echo "$@" 1>&2; }
 
@@ -53,4 +53,4 @@ cat cabal-packages | while read p ; do
   then echo $p ;
   else echoerr "Dropping package" $p "as it is not on Stackage." ;
   fi ;
-done | tr "\n" "\0" | xargs -0 cabal install --global
+done | tr "\n" "\0" | xargs -0 cabal install -j --global
