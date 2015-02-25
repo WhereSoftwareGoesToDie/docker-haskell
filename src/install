@@ -19,13 +19,6 @@ make install
 cd /src
 mkdir -p cabal
 cd cabal
-CABAL_VERSION=1.18.0.8
-# This needs to be a version using the bundled version of Cabal
-wget "http://hackage.haskell.org/package/cabal-install-$CABAL_VERSION/cabal-install-$CABAL_VERSION.tar.gz"
-tar xf "cabal-install-$CABAL_VERSION.tar.gz"
-cd "cabal-install-$CABAL_VERSION"
-./bootstrap.sh
-cp -a /src/.cabal/bin/cabal /usr/local/bin/
 
 rm -rf /usr/local/share/doc
 
@@ -40,7 +33,12 @@ cat "cabal.config?global=true" >> /root/.cabal/config
 # snap-server supports SSL. This is turned off by default though.
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
 
+# Prepare cabal-install (hacky way through debian cabal-install)
+apt-get install -y cabal-install
 cabal update
+cabal install -j --global cabal-install
+apt-get remove -y cabal-install
+apt-get autoremove -y
 
 # alex, happy and other tools
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install -j --global
