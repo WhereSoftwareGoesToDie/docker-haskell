@@ -4,6 +4,7 @@ aeson-pretty
 auto-update
 bimap
 byteorder
+cassava
 clock
 cmdargs
 conduit-extra
