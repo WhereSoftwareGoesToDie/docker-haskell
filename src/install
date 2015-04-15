@@ -33,6 +33,7 @@ rm cabal.config
 
 # snap-server supports SSL. This is turned off by default though.
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
+echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
 # Prepare cabal-install (hacky way through debian cabal-install)
 apt-get download cabal-install
