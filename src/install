@@ -27,8 +27,8 @@ cp /src/.cabal/config /root/.cabal/config
 
 cd /src
 
-wget "${STACKAGE_URL}/cabal.config?global=true"
-cat "cabal.config?global=true" >> /root/.cabal/config
+wget "${STACKAGE_URL}/cabal.config?global=true" -o cabal.config
+cat "cabal.config" >> /root/.cabal/config
 
 # snap-server supports SSL. This is turned off by default though.
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
