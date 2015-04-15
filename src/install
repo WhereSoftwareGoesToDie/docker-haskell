@@ -47,7 +47,7 @@ echoerr() { echo "$@" 1>&2; }
 
 # preinstalled packages
 cat cabal-packages | while read p ; do
-  if grep -q $p "cabal.config?global=true" ;
+  if grep -q $p "/root/.cabal/config" ;
   then echo $p ;
   else echoerr "Dropping package" $p "as it is not on Stackage." ;
   fi ;
