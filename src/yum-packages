@@ -44,6 +44,8 @@ rpm-build
 rpmdevtools
 gsl-devel
 gmp-devel
+gmp.686
 mesa-libGLU-devel
 glib2-devel
 gd-devel
+zlib.i686
