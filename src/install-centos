@@ -1,0 +1,57 @@
+#!/bin/sh
+set -x
+set -e
+
+echo "LANG=C.UTF-8" > /etc/default/locale
+
+cd /src
+
+yum update -q -y
+cat yum-packages | xargs yum install -q -y
+
+wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
+tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
+cd ghc-7.8.4
+./configure
+make install
+
+cd /src
+mkdir -p cabal
+cd cabal
+
+rm -rf /usr/local/share/doc
+
+mkdir /root/.cabal
+cp /src/.cabal/config /root/.cabal/config
+
+cd /src
+
+wget "${STACKAGE_URL}/cabal.config?global=true" -O cabal.config
+cat "cabal.config" >> /root/.cabal/config
+rm cabal.config
+
+# snap-server supports SSL. This is turned off by default though.
+echo "constraint: snap-server +openssl" >> /root/.cabal/config
+echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
+
+# Prepare cabal-install (hacky way through cabal-install)
+
+
+wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -o cabal.tar.gz
+tar -xf cabal.tar.gz
+./cabal update
+./cabal install -j --global cabal-install
+
+# alex, happy and other tools
+cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install -j --global
+
+echoerr() { echo "$@" 1>&2; }
+
+# preinstalled packages
+cat cabal-packages | while read p ; do
+  if grep -q $p "/root/.cabal/config" ;
+  then echo $p ;
+  else echoerr "Dropping package" $p "as it is not on Stackage." ;
+  fi ;
+done | tr "\n" "\0" | xargs -0 cabal install -j --global
+

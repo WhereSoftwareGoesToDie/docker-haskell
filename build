@@ -5,6 +5,22 @@ set -e
 NAME=$1
 DOCKER_REGISTRY=$2
 DOCKER_OPTS="$3"
+DOCKER_DISTRO=$4
+
+if   [ "$DOCKER_DISTRO" = "wheezy" ]; then
+    INSTALL_COMMAND="/src/install-debian"
+    DOCKER_IMAGE="debian:wheezy"
+elif [ "$DOCKER_DISTRO" = "jessie" ]; then
+    INSTALL_COMMAND="/src/install-debian"
+    DOCKER_IMAGE="debian:jessie"
+elif [ "$DOCKER_DISTRO" = "centos" ]; then
+    INSTALL_COMMAND="/src/install-centos"
+    DOCKER_IMAGE="centos:centos7"
+else
+    echo "Invalid Docker Distribution"
+    exit 1
+fi
+
 STACKAGE_VARIETY='lts'
 STACKAGE_VERSION='2.3'
 VERSION="$(date -u +%Y%m%d-%H%MZ)-$STACKAGE_VARIETY-$STACKAGE_VERSION"
@@ -21,8 +37,8 @@ if ! grep -q "^${FINGERPRINT}$" last-built; then
                           -e STACKAGE_URL=$STACKAGE_URL \
                           --name="$IMAGE_NAME" \
                           -t -v ${PWD}/cache:/src:rw \
-                          debian:jessie \
-                          "/bin/bash" -c "/src/install && chown -R $USER /src"
+                          $DOCKER_IMAGE \
+                          "/bin/bash" -c "$INSTALL_COMMAND && chown -R $USER /src"
   docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
   docker $DOCKER_OPTS rm "$IMAGE_NAME" || true
   docker $DOCKER_OPTS tag -f "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
