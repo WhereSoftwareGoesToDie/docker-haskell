@@ -36,8 +36,7 @@ echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
 # Prepare cabal-install (hacky way through cabal-install)
 
-
-wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -o cabal.tar.gz
+wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -O cabal.tar.gz
 tar -xf cabal.tar.gz
 ./cabal update
 ./cabal install -j --global cabal-install
