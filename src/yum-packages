@@ -19,7 +19,6 @@ Judy-devel
 lapack-devel
 libcurl-devel
 libedit-devel
-libedit-devel
 libicu-devel
 libnotify-devel
 libpqxx-devel
@@ -29,7 +28,6 @@ llvm
 make
 mesa-libGLU-devel
 mysql++-devel
-ncurses-devel
 ncurses-devel
 nettle-devel
 openldap-devel
