@@ -29,8 +29,8 @@ fi
 apt-get update -q -y
 cat apt-packages | xargs apt-get install -q -y
 
-curl -O https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2
-tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.bz2
+wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
+tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
 cd ghc-7.8.4
 ./configure
 make install
