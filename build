@@ -5,27 +5,36 @@ set -e
 NAME=$1
 DOCKER_REGISTRY=$2
 DOCKER_OPTS="$3"
+DOCKER_DISTRO=$4
+
+if   [ "$DOCKER_DISTRO" = "wheezy" ]; then
+    DOCKER_IMAGE="debian:wheezy"
+elif [ "$DOCKER_DISTRO" = "jessie" ]; then
+    DOCKER_IMAGE="debian:jessie"
+elif [ "$DOCKER_DISTRO" = "centos" ]; then
+    DOCKER_IMAGE="centos:centos7"
+else
+    echo "Invalid Docker Distribution"
+    exit 1
+fi
+
 STACKAGE_VARIETY='lts'
-STACKAGE_VERSION='2.3'
+STACKAGE_VERSION='2.7'
 VERSION="$(date -u +%Y%m%d-%H%MZ)-$STACKAGE_VARIETY-$STACKAGE_VERSION"
 IMAGE_NAME="${NAME}-${VERSION}"
 STACKAGE_URL="http://www.stackage.org/$STACKAGE_VARIETY/$STACKAGE_VERSION"
 COMMIT=$(git rev-parse HEAD)
-FINGERPRINT="${COMMIT}-$STACKAGE_VARIETY-$STACKAGE_VERSION"
 USER="$UID"
 
-if ! grep -q "^${FINGERPRINT}$" last-built; then
-  mkdir -p cache
-  rsync -a src/ cache
-  docker $DOCKER_OPTS run -e LANG=C.UTF-8 \
-                          -e STACKAGE_URL=$STACKAGE_URL \
-                          --name="$IMAGE_NAME" \
-                          -t -v ${PWD}/cache:/src:rw \
-                          debian:jessie \
-                          "/bin/bash" -c "/src/install && chown -R $USER /src"
-  docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
-  docker $DOCKER_OPTS rm "$IMAGE_NAME" || true
-  docker $DOCKER_OPTS tag -f "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
-  docker $DOCKER_OPTS push "$DOCKER_REGISTRY/engineering/${NAME}:latest"
-  echo "${FINGERPRINT}" > last-built
-fi
+mkdir -p cache
+rsync -a src/ cache
+docker $DOCKER_OPTS run -e LANG=C.UTF-8 \
+                        -e STACKAGE_URL=$STACKAGE_URL \
+                        --name="$IMAGE_NAME" \
+                        -t -v ${PWD}/cache:/src:rw \
+                        $DOCKER_IMAGE \
+                        "/bin/bash" -c "/src/install && chown -R $USER /src"
+docker $DOCKER_OPTS commit "$IMAGE_NAME" "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}"
+docker $DOCKER_OPTS rm "$IMAGE_NAME" || true
+docker $DOCKER_OPTS tag -f "$DOCKER_REGISTRY/engineering/${NAME}:${VERSION}" "$DOCKER_REGISTRY/engineering/${NAME}:latest"
+docker $DOCKER_OPTS push "$DOCKER_REGISTRY/engineering/${NAME}:latest"

@@ -8,6 +8,7 @@ To add additional packages to the build environment, add lines to the following 
 | File                 | Description              |
 |----------------------|--------------------------|
 | `src/apt-packages`   | Debian packages          |
+| `src/yum-packages`   | CentOS packages          |
 | `src/cabal-tools`    | Tools (happy, alex, ...) |
 | `src/cabal-packages` | Cabal Packages           |
 
