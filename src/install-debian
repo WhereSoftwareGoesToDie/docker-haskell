@@ -6,6 +6,19 @@ echo "LANG=C.UTF-8" > /etc/default/locale
 
 cd /src
 
+if grep "8\.0" /etc/debian_version; then
+    echo jessie
+elif grep "7\.0" /etc/debian_version; then
+    echo wheezy
+    wget http://packages.engineroom.anchor.net.au/ANCHOR-GPG-KEY
+    apt-key add ANCHOR-GPG-KEY
+    sudo tee -a /etc/apt/sources.list.d/feature-fleet.list <<EOF
+deb [ arch=amd64 ] http://packages.engineroom.anchor.net.au/feature/zeromq/debian wheezy fleet
+EOF
+else
+
+fi
+
 apt-get update -q -y
 apt-get dist-upgrade -q -y
 cat apt-packages | xargs apt-get install -q -y

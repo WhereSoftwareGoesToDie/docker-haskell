@@ -6,6 +6,16 @@ echo "LANG=C.UTF-8" > /etc/default/locale
 
 cd /src
 
+tee /etc/yum.repos.d/zeromq.repo <<EOF
+[zeromq_feature]
+name=ZeroMQ feature repo
+type=rpm-md
+baseurl=http://packages.engineroom.anchor.net.au/feature/zeromq/centos/7/x86_64/
+gpgcheck=1
+gpgkey=http://packages.engineroom.anchor.net.au/feature/ANCHOR-RPM-GPG-KEY
+enabled=1
+EOF
+
 yum update -q -y
 cat yum-packages | xargs yum install -q -y
 
