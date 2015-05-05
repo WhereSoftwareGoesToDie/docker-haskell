@@ -5,9 +5,9 @@ bzip2
 ca-certificates
 curl
 freeglut3-dev
+gcc
 g++
 git
-happy
 libblas-dev
 libbz2-dev
 libcairo2-dev
@@ -49,5 +49,4 @@ ssh
 wget
 xz-utils
 zip
-zlib1g
 zlib1g-dev

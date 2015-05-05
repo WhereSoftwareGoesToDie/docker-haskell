@@ -15,7 +15,6 @@ gmp-devel
 gmp.i686
 gsl-devel
 gtk2-devel
-happy
 Judy-devel
 lapack-devel
 libcurl-devel
@@ -40,6 +39,7 @@ pango-devel
 perl
 perl-JSON-PP
 postgresql
+postgresql-devel
 python
 rpm-build
 rpmdevtools

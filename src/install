@@ -6,7 +6,8 @@ echo "LANG=C.UTF-8" > /etc/default/locale
 
 cd /src
 
-tee /etc/yum.repos.d/zeromq.repo <<EOF
+if [ -f /etc/centos-release ]; then
+    tee /etc/yum.repos.d/zeromq.repo <<EOF
 [zeromq_feature]
 name=ZeroMQ feature repo
 type=rpm-md
@@ -16,8 +17,35 @@ gpgkey=http://packages.engineroom.anchor.net.au/feature/ANCHOR-RPM-GPG-KEY
 enabled=1
 EOF
 
-yum update -q -y
-cat yum-packages | xargs yum install -q -y
+    yum update -q -y
+    cat yum-packages | xargs yum install -q -y
+elif [ -f /etc/debian_version ]; then
+    apt-get update -q -y
+    apt-get install -q -y wget
+    if  grep "8." /etc/debian_version; then
+        echo jessie
+    elif grep "7." /etc/debian_version; then
+        echo wheezy
+        wget http://packages.engineroom.anchor.net.au/ANCHOR-GPG-KEY
+        apt-key add ANCHOR-GPG-KEY
+        tee -a /etc/apt/sources.list.d/feature-zeromq.list <<EOF
+deb [ arch=amd64 ] http://packages.engineroom.anchor.net.au/feature/zeromq/debian wheezy zeromq
+EOF
+        tee -a /etc/apt/sources.list.d/feature-libsodium.list <<EOF
+deb [ arch=amd64 ] http://packages.engineroom.anchor.net.au/feature/libsodium/debian wheezy libsodium
+EOF
+    else
+        echo "Unexpected debian version, exiting"
+        exit 1
+    fi
+    dpkg --add-architecture i386
+    apt-get update -q -y
+    cat apt-packages | xargs apt-get install -f -q -y
+    apt-get install -q -y libgmp10:i386 zlib1g:i386
+else
+    echo "No idea what this is"
+    exit 1
+fi
 
 wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
 tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
@@ -30,6 +58,8 @@ cd /src
 mkdir /root/.cabal
 cp /src/.cabal/config /root/.cabal/config
 
+cd /src
+
 wget "${STACKAGE_URL}/cabal.config?global=true" -O cabal.config
 cat "cabal.config" >> /root/.cabal/config
 rm cabal.config
@@ -39,11 +69,10 @@ echo "constraint: snap-server +openssl" >> /root/.cabal/config
 echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
 # Prepare cabal-install (hacky way through cabal-install)
-
 wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -O cabal.tar.gz
 tar -xf cabal.tar.gz
-./cabal update
-./cabal install -j --global cabal-install
+mv cabal /usr/local/bin
+cabal update
 
 # alex, happy and other tools
 cat cabal-tools | tr "\n" "\0" | xargs -0 cabal install -j --global
@@ -57,4 +86,3 @@ cat cabal-packages | while read p ; do
   else echoerr "Dropping package" $p "as it is not on Stackage." ;
   fi ;
 done | tr "\n" "\0" | xargs -0 cabal install -j --global
-
