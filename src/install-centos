@@ -26,15 +26,9 @@ cd ghc-7.8.4
 make install
 
 cd /src
-mkdir -p cabal
-cd cabal
-
-rm -rf /usr/local/share/doc
 
 mkdir /root/.cabal
 cp /src/.cabal/config /root/.cabal/config
-
-cd /src
 
 wget "${STACKAGE_URL}/cabal.config?global=true" -O cabal.config
 cat "cabal.config" >> /root/.cabal/config
