@@ -38,10 +38,8 @@ EOF
         echo "Unexpected debian version, exiting"
         exit 1
     fi
-    dpkg --add-architecture i386
     apt-get update -q -y
     cat apt-packages | xargs apt-get install -f -q -y
-    apt-get install -q -y libgmp10:i386 zlib1g:i386
 else
     echo "No idea what this is"
     exit 1
@@ -68,10 +66,7 @@ rm cabal.config
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
 echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
-# Prepare cabal-install (hacky way through cabal-install)
-wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -O cabal.tar.gz
-tar -xf cabal.tar.gz
-mv cabal /usr/local/bin
+cp /src/cabal /usr/local/bin
 cabal update
 
 # alex, happy and other tools
