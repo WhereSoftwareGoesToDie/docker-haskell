@@ -46,6 +46,7 @@ nettle-dev
 pkg-config
 python
 ssh
+sudo
 wget
 xz-utils
 zip
