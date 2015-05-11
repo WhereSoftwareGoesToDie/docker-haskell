@@ -45,18 +45,8 @@ else
     exit 1
 fi
 
-wget https://www.haskell.org/ghc/dist/7.8.4/ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
-tar xf ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz
-cd ghc-7.8.4
-./configure
-make install
-
-cd /src
-
 mkdir /root/.cabal
 cp /src/.cabal/config /root/.cabal/config
-
-cd /src
 
 wget "${STACKAGE_URL}/cabal.config?global=true" -O cabal.config
 cat "cabal.config" >> /root/.cabal/config
@@ -66,7 +56,10 @@ rm cabal.config
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
 echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
-cp /src/cabal /usr/local/bin
+
+eval "$( curl -sL https://github.com/mietek/halcyon/raw/master/setup.sh )"
+halcyon install
+
 cabal update
 
 # alex, happy and other tools
