@@ -40,7 +40,6 @@ postgresql-devel
 python
 rpm-build
 rpmdevtools
-sudo
 wget
 xz-devel
 xz-libs
