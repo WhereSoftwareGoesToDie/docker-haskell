@@ -68,10 +68,14 @@ rm cabal.config
 echo "constraint: snap-server +openssl" >> /root/.cabal/config
 echo "constraint: mtl-compat +two-point-one" >> /root/.cabal/config
 
-# Prepare cabal-install (hacky way through cabal-install)
-wget https://www.haskell.org/cabal/release/cabal-install-1.22.0.0/cabal-1.22.0.0-i386-unknown-linux.tar.gz -O cabal.tar.gz
+# Prepare cabal-install
+mkdir cabal && cd cabal
+wget https://www.haskell.org/cabal/release/cabal-install-1.22.4.0/cabal-install-1.22.4.0.tar.gz -O cabal.tar.gz
 tar -xf cabal.tar.gz
-mv cabal /usr/local/bin
+cd cabal-install-1.22.4.0
+./bootstrap.sh
+mv ~/.cabal/bin/cabal /usr/local/bin
+cd /src
 cabal update
 
 # alex, happy and other tools
