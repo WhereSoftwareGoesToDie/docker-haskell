@@ -30,8 +30,6 @@ mkdir -p cache
 rsync -a src/ cache
 docker $DOCKER_OPTS run -e LANG=C.UTF-8 \
                         -e STACKAGE_URL=$STACKAGE_URL \
-                        -e HALCYON_GHC_VERSION="7.8.4" \
-                        -e HALCYON_CABAL_VERSION="1.22.4.0" \
                         --name="$IMAGE_NAME" \
                         -t -v ${PWD}/cache:/src:rw \
                         $DOCKER_IMAGE \
