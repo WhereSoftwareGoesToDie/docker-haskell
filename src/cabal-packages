@@ -25,6 +25,7 @@ hslogger
 HsOpenSSL
 hspec
 HStringTemplate
+HTTP
 http-common
 http-date
 http-media
