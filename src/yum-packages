@@ -12,7 +12,6 @@ gd-devel
 git
 glib2-devel
 gmp-devel
-gmp.i686
 gsl-devel
 gtk2-devel
 Judy-devel
@@ -47,4 +46,3 @@ xz-libs
 zeromq-devel
 zip
 zlib-devel
-zlib.i686

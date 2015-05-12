@@ -38,10 +38,8 @@ EOF
         echo "Unexpected debian version, exiting"
         exit 1
     fi
-    dpkg --add-architecture i386
     apt-get update -q -y
     cat apt-packages | xargs apt-get install -f -q -y
-    apt-get install -q -y libgmp10:i386 zlib1g:i386
 else
     echo "No idea what this is"
     exit 1
